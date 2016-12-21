@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <body onload="do_game()">
+
+        <script>
+            var target;
+            var guess_input_text;
+            var finished = false;
+            var guesses = 0;
+            var count=0;
+            var game_colors=[];
+            var used_numbers=[];
+            var colors = ["aliceblue","antiquewhite","aqua","aquamarine","azure","beige","bisque","black","blanchedalmond","blue","blueviolet","brown","burlywood","cadetblue","chartreuse","chocolate","coral","cornflowerblue","cornsilk","crimson","cyan","darkblue","darkcyan","darkgoldenrod","darkgray","darkgrey","darkgreen","darkkhaki","darkmagenta","darkolivegreen","darkorange","darkorchid","darkred","darksalmon","darkseagreen","darkslateblue","darkslategray","darkslategrey","darkturquoise","darkviolet","deeppink","deepskyblue","dimgray","dimgrey","dodgerblue","firebrick","floralwhite","forestgreen","fuchsia","gainsboro","ghostwhite","gold","goldenrod","gray","grey","green","greenyellow","honeydew","hotpink","indianred","indigo","ivory","khaki","lavender","lavenderblush","lawngreen","lemonchiffon","lightblue","lightcoral","lightcyan","lightgoldenrodyellow","lightgray","lightgrey","lightgreen","lightpink","lightsalmon","lightseagreen","lightskyblue","lightslategray","lightslategrey","lightsteelblue","lightyellow","lime","limegreen","linen","magenta","maroon","mediumaquamarine","mediumblue","mediumorchid","mediumpurple","mediumseagreen","mediumslateblue","mediumspringgreen","mediumturquoise","mediumvioletred","midnightblue","mintcream","mistyrose","moccasin","navajowhite","navy","oldlace","olive","olivedrab","orange","orangered","orchid","palegoldenrod","palegreen","paleturquoise","palevioletred","papayawhip","peachpuff","peru","pink","plum","powderblue","purple","red","rosybrown","royalblue","saddlebrown","salmon","sandybrown","seagreen","seashell","sienna","silver","skyblue","slateblue","slategray","slategrey","snow","springgreen","steelblue","tan","teal","thistle","tomato","turquoise","violet","wheat","white","whitesmoke","yellow","yellowgreen"];
+            function do_game(){
+                var size = colors.length;
+                do{                                                             // CHOOSE 12 RANDOM COLORS EVERY TIME YOU RUN THE GAME
+                    var random_number = Math.random() * size;
+                    var random_number_integer = Math.floor(random_number);
+                    var answer;
+                    answer = not_repeat(random_number_integer,used_numbers);   //MAKE SURE THE GAME DON'T PICK A COLOR TWICE
+
+                    if (answer==-1){
+                        used_numbers.push(random_number_integer);
+                        game_colors[count] = colors[random_number_integer];
+                        count++;
+                    }
+                }while(count<12);
+
+                random_number = Math.random()*12;
+                random_number_integer = Math.floor(random_number);
+                target = game_colors[random_number_integer];
+
+                game_colors.sort();                     //SORT THE COLORS ALPHABETICALLY
+                alert("The color is " + target);        // GET THE ANSWER TO TEST EVERYTHING IS WORKING FINE AKA CHEATING :P
+                while (!finished) {                     // START GAME
+                    guess_input_text=prompt(" I am thinking of one of these colors: \n\n- "
+                            + game_colors.join("\n- "));
+                    guesses+=1;
+                    if (guess_input_text == target){
+                        alert("You got it! The color was " + target +
+                                ".\n\nIt took you " + guesses +
+                                " guesses to get the number!");
+                        finished = true;
+                    }
+                }
+            }
+
+            function not_repeat(num,arr){      //CONTROLS THAT NO COLOR CAN REPEAT
+                return (arr.indexOf(num));
+            }
+        </script>
+    </body>
+</html>
